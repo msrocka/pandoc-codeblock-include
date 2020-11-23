@@ -22,9 +22,10 @@ def parse_include(parsed, name, value):
     """
     if name == "include":
         try:
-            file_content = open(value, "r").readlines()
-            parsed["content"] = file_content
-            parsed["include"] = value
+            with open(value, "r", encoding="utf-8") as stream:
+                file_content = stream.readlines()
+                parsed["content"] = file_content
+                parsed["include"] = value
         except IOError:
             debug("[WARNING] pandoc-codeblock-include: " + value + " not found")
         except UnicodeDecodeError:
